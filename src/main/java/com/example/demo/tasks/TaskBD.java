@@ -34,4 +34,31 @@ public class TaskBD {
         return tasks.size();
     }
 
+    public void editTask(long id, String name, String description, String deadline, boolean isCompleted) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                task.setName(name);
+                task.setDescription(description);
+                task.setDeadlineDate(deadline);
+                task.setIsCompleted(isCompleted);
+
+                break;
+            }
+        }
+    }
+
+    public Task getTask(long id) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                return task;
+            }
+        }
+
+        return null;
+    }
+
+    public void deleteTask(long id) {
+        tasks.removeIf(task -> task.getId() == id);
+    }
+
 }

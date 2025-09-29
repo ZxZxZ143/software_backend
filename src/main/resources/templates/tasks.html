@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
-      >
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="'layout.html'"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Task Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .navbar-custom {
-            background-color: #2a8d9c;
-        }
-
         .btn-custom {
             background-color: #2a8d9c;
             color: #fff;
@@ -24,70 +22,114 @@
 </head>
 <body>
 
-<div layout:fragment="content">
-    <div class="container mt-4">
+<div class="container mt-4" layout:fragment="content">
 
-        <button class="btn btn-info mb-3">+ Add New Task</button>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addModal" class="btn btn-info mb-3">+ Add New
+        Task
+    </button>
 
-        <table class="table table-bordered align-middle text-center">
-            <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>DEADLINE DATE</th>
-                <th>IS COMPLETED</th>
-                <th>DETAILS</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td class="text-start">Complete Task 7 from Spring Boot till the end of lesson</td>
-                <td>23.10.2020</td>
-                <td>YES</td>
-                <td>
-                    <button class="btn btn-sm btn-custom">DETAILS</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td class="text-start">Clear home and buy foods</td>
-                <td>25.10.2020</td>
-                <td>YES</td>
-                <td>
-                    <button class="btn btn-sm btn-custom">DETAILS</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td class="text-start">Complete all home tasks at the weekend</td>
-                <td>28.10.2020</td>
-                <td>NO</td>
-                <td>
-                    <button class="btn btn-sm btn-custom">DETAILS</button>
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td class="text-start">Develop simple project in Spring Boot for the final</td>
-                <td>12.12.2020</td>
-                <td>NO</td>
-                <td>
-                    <button class="btn btn-sm btn-custom">DETAILS</button>
-                </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td class="text-start">Learn Italian Language</td>
-                <td>01.05.2021</td>
-                <td>NO</td>
-                <td>
-                    <button class="btn btn-sm btn-custom">DETAILS</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="/tasks/add" method="post" id="addForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-bold">NAME:</label>
+                            <input type="text" name="name" class="form-control" id="name"
+                                   placeholder="Insert name :" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label fw-bold">TASK DESCRIPTION:</label>
+                            <textarea name="description" class="form-control" id="description" rows="5"
+                                      placeholder="Description:" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deadline" class="form-label fw-bold">DEADLINE :</label>
+                            <input type="date" name="deadline" class="form-control" id="deadline" required>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="addForm">Add Task</button>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+    <table class="table table-bordered align-middle text-center">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>DEADLINE DATE</th>
+            <th>IS COMPLETED</th>
+            <th>DETAILS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.getId()}"></td>
+            <td class="text-start" th:text="${task.getName()}"></td>
+            <td th:text="${task.getDeadlineDate()}"></td>
+            <td th:text="${task.getIsCompleted() ? 'YES' : 'NO'}"></td>
+            <td>
+                <button class="btn btn-sm btn-custom" data-bs-toggle="modal"
+                        th:data-bs-target="'#detailModal' + ${task.getId()}">DETAILS
+                </button>
+
+                <div class="modal fade" th:id="'detailModal' + ${task.getId()}" tabindex="-1"
+                     aria-labelledby="detailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" th:text="${task.getName()}"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <p class="form-label fw-bold">TASK DESCRIPTION:</p>
+                                    <p class="form-control" th:text="${task.getDescription()}"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <p class="form-label fw-bold">DEADLINE:</p>
+                                    <p class="form-control" th:text="${task.getDeadlineDate()}"></p>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                </button>
+                                <form th:action="'/tasks/delete/' + ${task.getId()}" method="post">
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                                <a th:href="'/tasks/edit/' + ${task.getId()}">
+                                    <button type="submit"
+                                            class="btn btn-success">Edit
+                                    </button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 

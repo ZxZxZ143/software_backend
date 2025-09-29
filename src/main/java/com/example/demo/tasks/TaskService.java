@@ -1,6 +1,5 @@
 package com.example.demo.tasks;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,5 +18,17 @@ public class TaskService {
         taskBD.addTask(newTask);
     }
 
-    public void editTask(long id, Task task) {}
+    public void editTask(long id, String name, String description, String deadline, String isCompleted) {
+        boolean isCompletedBol = isCompleted.equals("on");
+
+        taskBD.editTask(id, name, description, deadline, isCompletedBol);
+    }
+
+    public Task getTask(long id) {
+        return taskBD.getTask(id);
+    }
+
+    public void deleteTask(long id) {
+        taskBD.deleteTask(id);
+    }
 }
