@@ -21,7 +21,7 @@ public class ItemsManagement {
 
     private ItemsManagement() {
         items = new ArrayList<>();
-        items.add(new Item(1, "lenovo", "gdfsgfgdf", 1234f));
+        items.add(new Item(0, "lenovo", "gdfsgfgdf", 1234f));
     }
 
     public void addItem(Item item) {
