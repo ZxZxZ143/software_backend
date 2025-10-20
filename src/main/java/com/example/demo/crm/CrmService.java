@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -116,10 +117,16 @@ public class CrmService {
 
         List<OperatorsModel> operators = requestModel.getOperators();
 
-        System.out.println(operators.get(0).getId());
-        System.out.println(operators.get(0));
+        List<OperatorsModel> updatedOperators = new ArrayList<>();
 
-        requestModel.setOperators(operators);
+        for (OperatorsModel operatorsModel : operators) {
+            if (operatorsModel.getId().equals(operatorId)) {
+                continue;
+            }
+            updatedOperators.add(operatorsModel);
+        }
+
+        requestModel.setOperators(updatedOperators);
 
         requestRepository.save(requestModel);
     }
