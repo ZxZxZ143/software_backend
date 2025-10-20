@@ -89,30 +89,23 @@
 </nav>
 
 <div class="form-container">
-    <form action="/crm/add" method="POST" th:object="${request}">
+    <form action="/crm/add/course" method="POST" th:object="${course}">
         <div class="mb-3">
-            <label for="username" class="form-label">ФИО:</label>
-            <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="">
         </div>
 
         <div class="mb-3">
-            <label for="course" class="form-label">Курс:</label>
-            <select class="form-select" th:each="course : ${courses}" th:field="*{courseId}" id="course">
-                <option th:value="${course.getId()}" th:text="${course.getName() + ' ' + course.getPrice() + '$' }"/>
-            </select>
+            <label for="desc" class="form-label">Description:</label>
+            <textarea th:field="*{description}" class="form-control" id="desc" placeholder=""></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="phone" class="form-label">Телефон:</label>
-            <input type="tel" class="form-control" th:field="*{phone}" id="phone" placeholder="+7(__) ___-__-__">
+            <label for="price" class="form-label">Description:</label>
+            <input type="number" th:field="*{price}" class="form-control" id="price" placeholder="">
         </div>
 
-        <div class="mb-3">
-            <label for="comments" class="form-label">Комментарий:</label>
-            <textarea class="form-control" id="comments" th:field="*{comment}" placeholder="Комментарий"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-submit">Добавить заявку</button>
+        <button type="submit" class="btn btn-submit">Add course</button>
     </form>
 </div>
 

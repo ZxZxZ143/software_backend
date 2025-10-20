@@ -1,6 +1,7 @@
 package com.example.demo.crm.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,8 @@ public class RequestDto {
     @Size(min=1, max=150)
     private String comment;
 
-    @NotBlank
-    private String courseName;
+    @NotNull
+    private Long courseId;
 
     @NotBlank(message = "phone can not be blank")
     @Pattern(regexp = "^\\+?\\d{10,15}$", message = "Invalid phone number")

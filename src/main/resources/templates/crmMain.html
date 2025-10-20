@@ -88,10 +88,10 @@
                     <a class="nav-link" href="/crm/add">Новые Заявки</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Обработанные заявки</a>
+                    <a class="nav-link" href="/crm/add/course">Добавить курс</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Аналитика</a>
+                    <a class="nav-link" href="crm/add/operator">Добавить оператора</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Личный Кабинет</a>
@@ -106,7 +106,7 @@
         <div class="col-lg-6" th:each="request:${requestList}">
             <div class="request-card">
                 <div class="request-title" th:text="${!request.getHandled() ? '*(Новая) ' + request.getUserName() : request.getUserName()}" />
-                <div class="course-label" th:text="'Курс: ' + ${request.getCourseName()}" />
+                <div class="course-label" th:text="'Курс: ' + ${request.getCourses().name}" />
                 <div class="question-text" th:text="${request.getComment()}" />
                 <div class="contact-info">
                     <span class="phone-number" th:text="${request.getPhone()}" />

@@ -126,13 +126,8 @@
 
         <div class="mb-3">
             <label for="course" class="form-label">Курс:</label>
-            <select class="form-select" th:field="*{courseName}" id="course" disabled>
-                <option value="Java Standard Edition">Java Standard Edition</option>
-                <option value="Python Programming Language">Python Programming Language</option>
-                <option value="Web Technologies">Web Technologies</option>
-                <option value="UX/UI Design">UX/UI Design</option>
-                <option value="Java Pro">Java Pro</option>
-                <option value="Design Framework">Design Framework</option>
+            <select class="form-select" th:field="*{courses.name}" id="course" disabled>
+                <option th:value="*{courses.id}" th:text="*{courses.name}" />
             </select>
         </div>
 
@@ -149,12 +144,82 @@
         </div>
     </form>
     <div>
-        <form th:action="'/crm/handle/' + ${request.getId()}" method="post" th:class="${request.getHandled() ? 'hidden' : ''}">
-            <button type="submit" class="btn btn-submit">Обработать заявку</button>
+        <form th:action="'/crm/handle/' + ${request.getId()}" th:object="${operatorsHandle}" method="post" th:class="${request.getHandled() ? 'hidden' : ''}">
+            <div class="container mt-5 text-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#operatorModal">
+                    Выбрать оператора
+                </button>
+            </div>
+
+            <div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="operatorModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="operatorModalLabel">Выберите оператора</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Выбрать</th>
+                                        <th scope="col">Имя</th>
+                                        <th scope="col">Фамилия</th>
+                                        <th scope="col">Департамент</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="operator : ${operators}">
+                                    <tr>
+                                        <td><input class="form-check-input" th:field="*{ids}" type="checkbox" th:value="${operator.id}" /></td>
+                                        <td th:text="${operator.name}" />
+                                        <td th:text="${operator.surname}" />
+                                        <td th:text="${operator.department}" />
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Назначить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
         <form th:action="'/crm/delete/' + ${request.getId()}" method="POST">
             <button type="submit" class="btn btn-danger">Удалить</button>
         </form>
+    </div>
+    <div th:class="${request.getHandled() ? 'container my-5' : 'hidden container my-5'}">
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Удалить</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Департамент</th>
+                </tr>
+                </thead>
+                <tbody th:each="operator : ${request.getOperators()}">
+                <tr>
+                    <td>
+                        <form th:action="'/crm/' + ${request.id} + '/delete/operator'" method="post">
+                            <input type="hidden" name="operatorId" th:value="${operator.id}" />
+                            <button type="submit" class="btn-delete">✕</button>
+                        </form>
+                    </td>
+                    <td th:text="${operator.name}" />
+                    <td th:text="${operator.surname}" />
+                    <td th:text="${operator.department}" />
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

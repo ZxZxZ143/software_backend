@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "requests")
 @AllArgsConstructor
@@ -18,9 +20,6 @@ public class RequestModel {
     @Column(name = "user_name", nullable = false, length = 50)
     private String userName;
 
-    @Column(name = "course_name", nullable = false)
-    private String courseName;
-
     @Column(name = "comment")
     private String comment;
 
@@ -29,4 +28,16 @@ public class RequestModel {
 
     @Column(name = "handled", nullable = false)
     private Boolean handled = false;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    private CoursesModel courses;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "operators_on_request",
+            joinColumns = @JoinColumn(name = "request_id"),
+            inverseJoinColumns = @JoinColumn(name = "operator_id")
+    )
+    private List<OperatorsModel> operators;
 }
