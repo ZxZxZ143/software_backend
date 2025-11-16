@@ -1,15 +1,14 @@
-package com.example.demo.person;
+package com.example.demo.person.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.mapstruct.Mapper;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonResDto extends PersonDto {
+public class PetResDto extends PetDto {
     private Long id;
 }

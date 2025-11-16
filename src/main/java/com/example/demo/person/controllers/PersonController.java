@@ -1,5 +1,9 @@
-package com.example.demo.person;
+package com.example.demo.person.controllers;
 
+import com.example.demo.person.dto.PersonDto;
+import com.example.demo.person.dto.PersonPatchDto;
+import com.example.demo.person.dto.PersonResDto;
+import com.example.demo.person.services.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,5 +56,19 @@ public class PersonController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @PostMapping("/{personId}/assign_pet/{petId}")
+    public ResponseEntity<PersonResDto> assignPet(@PathVariable Long personId, @PathVariable Long petId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(personService.assignPetToPerson(personId, petId));
+    }
+
+    @PostMapping("{personId}/assign_parent/{parentId}")
+    public ResponseEntity<PersonResDto> assignParent(@PathVariable Long personId, @PathVariable Long parentId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(personService.assignParent(personId, parentId));
     }
 }

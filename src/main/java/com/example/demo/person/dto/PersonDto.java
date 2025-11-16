@@ -1,4 +1,4 @@
-package com.example.demo.person;
+package com.example.demo.person.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,13 +14,11 @@ public class PersonDto {
     @Size(min = 1, max = 40)
     private String name;
 
-    @NotBlank
     private Integer age;
 
     @NotBlank
     @Size(min = 1, max = 40)
     private String surname;
 
-    @NotBlank
     private Integer height;
 }
