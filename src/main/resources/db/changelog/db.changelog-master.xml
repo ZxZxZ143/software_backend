@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="/db/changelog/changes/23-11-2025-22-53-00-create-country-table.xml" />
+    <include file="/db/changelog/changes/23-11-2025-23-13-00-create-item-table.xml" />
+    <include file="db/changelog/changes/23-11-2025-23-25-00-insert-countries.xml" />
+    <include file="db/changelog/changes/23-11-2025-23-28-00-insert-items.xml" />
+    <include file="db/changelog/changes/24-11-2025-00-02-00-fix-item-manufacturer-id-type.xml" />
+    <include file="db/changelog/changes/24-11-2025-00-12-00-fix-item-manufacturer-id-auto-increment.xml" />
+</databaseChangeLog>

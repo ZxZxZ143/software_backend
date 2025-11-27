@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-item-table" author="admin">
+        <createTable tableName="item">
+            <column name="id" autoIncrement="true" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="price" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="manufacturer_id" type="serial">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="assign-foreign-key-for-item" author="admin">
+        <addForeignKeyConstraint
+                baseTableName="item"
+                baseColumnNames="manufacturer_id"
+                constraintName="fk_manufacturer_id"
+                referencedTableName="country"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                validate="true"
+        />
+    </changeSet>
+</databaseChangeLog>
