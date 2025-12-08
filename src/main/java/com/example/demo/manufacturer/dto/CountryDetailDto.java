@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDetailDto extends ItemResDto {
-    private CountryResDto manufacturer;
+public class CountryDetailDto extends CountryDto {
+    private Integer id;
+    private List<ItemResDto> items;
 }

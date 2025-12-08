@@ -1,0 +1,22 @@
+services:
+  # основная база данных для работы приложения
+  main-db:
+    image: 'postgres'
+    container_name: 'main-database-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=134679002
+      - POSTGRES_DB=software_db
+    ports:
+      - "2345:5432"
+
+  # база данных для тестирования
+  test-db:
+    image: 'postgres'
+    container_name: 'test-database-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=134679002
+      - POSTGRES_DB=software_db
+    ports:
+      - "2346:5432"

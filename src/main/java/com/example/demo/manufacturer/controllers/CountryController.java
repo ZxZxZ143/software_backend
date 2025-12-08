@@ -1,5 +1,6 @@
 package com.example.demo.manufacturer.controllers;
 
+import com.example.demo.manufacturer.dto.CountryDetailDto;
 import com.example.demo.manufacturer.dto.CountryDto;
 import com.example.demo.manufacturer.dto.CountryResDto;
 import com.example.demo.manufacturer.service.CountryService;
@@ -28,12 +29,12 @@ public class CountryController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CountryResDto> getCountryById(@PathVariable Integer id) {
+    public ResponseEntity<CountryDetailDto> getCountryById(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(countryService.getCountryById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CountryResDto> createCountry(@RequestBody CountryDto countryDto) {
+    public ResponseEntity<CountryDetailDto> createCountry(@RequestBody CountryDto countryDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(countryService.createCountry(countryDto));
     }
 }
